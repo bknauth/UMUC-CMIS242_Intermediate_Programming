@@ -1,2 +1,1 @@
-Like CMIS 141, this was all written when I was still learning the basics.  The projects include some GUI building and OOP
-practice.  While this is rudimentary, I still felt it should be included with my school projects.
+Like CMIS 141, this was all written when I was still learning the basics.  The projects include some GUI building and OOP practice.  While this is rudimentary, I still felt it should be included with my school projects.
