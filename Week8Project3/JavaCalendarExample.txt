@@ -1,0 +1,117 @@
+package testpackage;
+
+import java.awt.*;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
+import javax.swing.*;
+
+public class TestCode extends JFrame{
+
+GregorianCalendar date = new GregorianCalendar();
+int month = date.get(Calendar.MONTH);
+DrawCalendar window = new DrawCalendar(date);
+
+    public static void main(String[] args) {
+
+        TestCode frame = new TestCode();
+        frame.pack();
+        frame.setTitle("Calendar Project");
+        frame.setLocationRelativeTo(null);
+        frame.setSize(500, 500);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setVisible(true);
+    }
+   public TestCode(){
+       setLayout(new BorderLayout());
+       add(window);
+   }
+}
+
+
+
+
+
+package testpackage;
+
+import java.awt.*;
+import java.util.GregorianCalendar;
+import javax.swing.*;
+
+public class DrawCalendar extends JPanel{
+
+private JLabel[] dayBoxNumbers;
+private JLabel month = new JLabel("Month");
+private JLabel[] days = {
+    new JLabel("Sunday"),
+    new JLabel("Monday"),
+    new JLabel("Tuesday"),
+    new JLabel("Wednesday"),
+    new JLabel("Thursday"),
+    new JLabel("Friday"),
+    new JLabel("Saturday")
+};
+
+
+
+private JPanel window = new JPanel(new GridLayout(2,1));
+private JPanel topLabels = new JPanel(new GridLayout(2,1));
+    private JPanel dayLabels = new JPanel(new GridLayout(1, 7));
+private JPanel dayBoxes = new JPanel(new GridLayout(0,7));
+
+
+
+
+
+public DrawCalendar(GregorianCalendar date){
+
+    //put days and month into topLabels then add topLabels to UI
+    for(int x = 0; x < 7; x++){
+        dayLabels.add(days[x]);
+    }
+
+    month.setHorizontalAlignment(SwingConstants.CENTER);
+    topLabels.add(month);
+    topLabels.add(dayLabels);
+    window.add(topLabels, BorderLayout.NORTH);
+    window.add(dayBoxes, BorderLayout.CENTER);
+    add(window);
+
+    //Find the grid square to start the date
+    int firstDay = getFirstDay(date);
+    int lastDay = date.getActualMaximum(GregorianCalendar.DAY_OF_MONTH);
+
+    addDaySquares(firstDay, lastDay);
+
+
+}
+
+
+private void addDaySquares(int first, int last){
+    //Create blank entries into the grid
+    for(int i = 1; i < first; i++){
+        dayBoxes.add(new JLabel(""));   
+    }
+
+    //create array of JLabels for day boxes
+    dayBoxNumbers = new JLabel[last];
+    for(int x=0; x < last; x++){
+        dayBoxNumbers[x] = new JLabel(String.valueOf(x+1));
+    }
+
+    //Add JLabels to the grid and edit properties
+    for(int j=0; j < last; j++){
+        dayBoxNumbers[j].setBorder(BorderFactory.createLineBorder(Color.black));
+        dayBoxNumbers[j].setHorizontalAlignment(SwingConstants.RIGHT);
+        dayBoxNumbers[j].setVerticalAlignment(SwingConstants.TOP);
+        dayBoxNumbers[1].setPreferredSize(new Dimension(30,40));
+        dayBoxes.add(dayBoxNumbers[j]);
+    }
+
+
+}
+
+private int getFirstDay(GregorianCalendar firstDay){
+    firstDay.set(GregorianCalendar.DAY_OF_MONTH, 1);
+    return firstDay.get(GregorianCalendar.DAY_OF_WEEK);
+}
+}
